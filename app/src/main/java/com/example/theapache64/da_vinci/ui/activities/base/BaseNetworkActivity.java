@@ -21,7 +21,7 @@ public abstract class BaseNetworkActivity<R> extends BaseProgressManActivity imp
     private Call<BaseAPIResponse<R>> call;
 
     protected void load() {
-        load("Loading...");
+        load("");
     }
 
     @Override
