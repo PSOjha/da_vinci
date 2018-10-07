@@ -16,17 +16,20 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ShapesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<GetShapesResponse.Shape> shapes;
     private final LayoutInflater inflater;
     private final Context context;
+    private final Callback callback;
 
-    public ShapesAdapter(Context context, List<GetShapesResponse.Shape> shapes) {
+    public ShapesAdapter(Context context, List<GetShapesResponse.Shape> shapes, Callback callback) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.shapes = shapes;
+        this.callback = callback;
     }
 
     @NonNull
@@ -60,6 +63,17 @@ public class ShapesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        @OnClick(R.id.ivShape)
+        public void onShapeClicked() {
+            final int position = getLayoutPosition();
+            final GetShapesResponse.Shape shape = shapes.get(position);
+            callback.onItemClicked(position, shape);
+        }
+    }
+
+    public interface Callback {
+        void onItemClicked(int position, GetShapesResponse.Shape shape);
     }
 
 

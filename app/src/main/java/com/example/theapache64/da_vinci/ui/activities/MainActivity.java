@@ -33,7 +33,6 @@ public class MainActivity extends BaseNetworkActivity<GetShapesResponse> {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         load();
     }
 
@@ -44,8 +43,6 @@ public class MainActivity extends BaseNetworkActivity<GetShapesResponse> {
 
     @Override
     protected void onResponseLoaded(GetShapesResponse response) {
-        showToast(response.getCategories().size() + "");
-
         final List<GetShapesResponse.Category> categories = response.getCategories();
         final CategoriesPagerAdapter adapter = new CategoriesPagerAdapter(getSupportFragmentManager(), categories);
         vpShapes.setAdapter(adapter);
