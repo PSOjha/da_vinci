@@ -17,13 +17,6 @@ public class BaseAppCompatActivity
         extends AppCompatActivity {
 
 
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        ButterKnife.bind(this);
-    }
-
-
     /**
      * To show toast with short length
      *
@@ -50,6 +43,12 @@ public class BaseAppCompatActivity
     public ViewGroup getContentView() {
         ViewGroup content = findViewById(android.R.id.content);
         return (ViewGroup) content.getChildAt(0);
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        ButterKnife.bind(this);
     }
 
 }

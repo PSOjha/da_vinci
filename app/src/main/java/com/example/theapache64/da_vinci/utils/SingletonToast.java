@@ -7,10 +7,10 @@ import android.widget.Toast;
 
 public class SingletonToast {
 
+    private static Toast toast;
+
     private SingletonToast() {
     }
-
-    private static Toast toast;
 
     public static Toast makeText(Context context, @StringRes int text, int duration) {
         return makeText(context, context.getString(text), duration);

@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.theapache64.da_vinci.R;
 import com.example.theapache64.da_vinci.api.responses.GetShapesResponse;
@@ -15,7 +13,6 @@ import com.example.theapache64.da_vinci.ui.adapters.ShapesAdapter;
 import com.example.theapache64.da_vinci.ui.fragments.base.BaseFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -46,8 +43,7 @@ public class ShapesFragment extends BaseFragment {
     @Override
     protected void onLayout(View layout) {
         assert getArguments() != null;
-        @SuppressWarnings("unchecked")
-        final ArrayList<GetShapesResponse.Shape> shapes = (ArrayList<GetShapesResponse.Shape>) getArguments().getSerializable(KEY_SHAPES);
+        @SuppressWarnings("unchecked") final ArrayList<GetShapesResponse.Shape> shapes = (ArrayList<GetShapesResponse.Shape>) getArguments().getSerializable(KEY_SHAPES);
         final ShapesAdapter shapeAdapter = new ShapesAdapter(getActivity(), shapes);
         rvShapes.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         rvShapes.setAdapter(shapeAdapter);

@@ -1,7 +1,5 @@
 package com.example.theapache64.da_vinci.ui.activities.base;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 

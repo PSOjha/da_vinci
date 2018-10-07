@@ -14,21 +14,21 @@ public class BaseAPIResponse<T> {
     private final String message;
 
 
-    public BaseAPIResponse(T data, boolean error, String message){
+    public BaseAPIResponse(T data, boolean error, String message) {
         this.data = data;
         this.error = error;
         this.message = message;
     }
 
-    public T getData(){
+    public T getData() {
         return data;
     }
 
-    public boolean isError(){
+    public boolean isError() {
         return error;
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
 }
