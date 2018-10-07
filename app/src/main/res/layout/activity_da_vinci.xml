@@ -7,7 +7,7 @@
     android:weightSum="100"
     tools:context=".ui.activities.da_vinci.DaVinciActivity">
 
-    <com.example.theapache64.da_vinci.widgets.DaVinciCanvas
+    <com.theah64.da_vinci.widgets.DaVinciCanvas
         android:id="@+id/dvc"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.theapache64.da_vinci">
+    package="com.theah64.da_vinci">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
