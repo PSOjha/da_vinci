@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -23,6 +24,9 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
     @BindView(R.id.dvc)
     DaVinciCanvas dvc;
 
+    @BindView(R.id.rvActions)
+    RecyclerView rvActions;
+
     private static final String KEY_SHAPE = "shape";
 
     @Override
@@ -39,7 +43,10 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
                 .asBitmap()
                 .load(shape.getImageUrl())
                 .addListener(this)
-                .submit();
+                .submit(300, 300);
+
+        // Building actions
+
 
     }
 
@@ -62,6 +69,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
     public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
         hideLoading();
         showToast("Ready!");
+        dvc.setBitmap(resource);
         return true;
     }
 }
