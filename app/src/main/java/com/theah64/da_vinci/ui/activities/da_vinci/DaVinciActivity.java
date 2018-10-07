@@ -18,7 +18,7 @@ import com.theah64.da_vinci.widgets.DaVinciCanvas;
 
 import butterknife.BindView;
 
-public class DaVinciActivity extends BaseProgressManActivity {
+public class DaVinciActivity extends BaseProgressManActivity implements RequestListener<Bitmap> {
 
     @BindView(R.id.dvc)
     DaVinciCanvas dvc;
@@ -38,22 +38,8 @@ public class DaVinciActivity extends BaseProgressManActivity {
         Glide.with(this)
                 .asBitmap()
                 .load(shape.getImageUrl())
-                .addListener(new RequestListener<Bitmap>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                        hideLoading();
-                        showToast("Failed");
-                        finish();
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                        hideLoading();
-                        showToast("Ready!");
-                        return true;
-                    }
-                }).submit();
+                .addListener(this)
+                .submit();
 
     }
 
@@ -62,5 +48,20 @@ public class DaVinciActivity extends BaseProgressManActivity {
         final Intent intent = new Intent(context, DaVinciActivity.class);
         intent.putExtra(KEY_SHAPE, shape);
         context.startActivity(intent);
+    }
+
+    @Override
+    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+        hideLoading();
+        showToast("Failed");
+        finish();
+        return true;
+    }
+
+    @Override
+    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+        hideLoading();
+        showToast("Ready!");
+        return true;
     }
 }
