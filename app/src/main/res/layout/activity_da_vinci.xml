@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="100"
+    tools:context=".ui.activities.da_vinci.DaVinciActivity">
+
+    <com.example.theapache64.da_vinci.widgets.DaVinciCanvas
+        android:id="@+id/dvc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="90" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvActions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:scrollbars="horizontal" />
+
+</LinearLayout>

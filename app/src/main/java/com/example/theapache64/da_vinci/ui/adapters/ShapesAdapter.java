@@ -18,30 +18,28 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShapesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ShapesAdapter extends BaseRecyclerViewAdapter<ShapesAdapter.ShapeHolder> {
 
     private final List<GetShapesResponse.Shape> shapes;
-    private final LayoutInflater inflater;
     private final Context context;
     private final Callback callback;
 
     public ShapesAdapter(Context context, List<GetShapesResponse.Shape> shapes, Callback callback) {
+        super(context);
         this.context = context;
-        this.inflater = LayoutInflater.from(context);
         this.shapes = shapes;
         this.callback = callback;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View itemView = inflater.inflate(R.layout.shapes_layout, parent, false);
+    public ShapeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final View itemView = getInflater().inflate(R.layout.shape_layout, parent, false);
         return new ShapeHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final ShapeHolder shapeHolder = (ShapeHolder) holder;
+    public void onBindViewHolder(@NonNull ShapeHolder shapeHolder, int position) {
         final GetShapesResponse.Shape shape = shapes.get(position);
 
         Glide.with(context)

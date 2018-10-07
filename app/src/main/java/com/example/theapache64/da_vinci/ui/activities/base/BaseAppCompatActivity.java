@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import com.example.theapache64.da_vinci.utils.SingletonToast;
 
+import java.io.Serializable;
+
 import butterknife.ButterKnife;
 
 /**
@@ -49,6 +51,15 @@ public class BaseAppCompatActivity
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
+    }
+
+
+    protected Serializable getSerializableExtra(String key, Serializable defaultSerializable) {
+        final Serializable serializable = getIntent().getSerializableExtra(key);
+        if (serializable == null) {
+            return defaultSerializable;
+        }
+        return serializable;
     }
 
 }

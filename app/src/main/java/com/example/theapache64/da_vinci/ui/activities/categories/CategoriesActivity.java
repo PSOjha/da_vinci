@@ -1,4 +1,4 @@
-package com.example.theapache64.da_vinci.ui.activities;
+package com.example.theapache64.da_vinci.ui.activities.categories;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import retrofit2.Call;
 
-public class MainActivity extends BaseNetworkActivity<GetShapesResponse> {
+public class CategoriesActivity extends BaseNetworkActivity<GetShapesResponse> implements CategoriesView {
 
 
     @BindView(R.id.tlCategories)
@@ -26,12 +26,16 @@ public class MainActivity extends BaseNetworkActivity<GetShapesResponse> {
     @BindView(R.id.vpCategories)
     ViewPager vpShapes;
 
+    private CategoriesPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_categories);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        presenter = new CategoriesPresenterImpl(this);
 
         load();
     }

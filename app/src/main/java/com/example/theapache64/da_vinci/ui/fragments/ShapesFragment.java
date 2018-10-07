@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.theapache64.da_vinci.R;
 import com.example.theapache64.da_vinci.api.responses.GetShapesResponse;
+import com.example.theapache64.da_vinci.ui.activities.da_vinci.DaVinciActivity;
 import com.example.theapache64.da_vinci.ui.adapters.ShapesAdapter;
 import com.example.theapache64.da_vinci.ui.fragments.base.BaseFragment;
 
@@ -48,7 +48,7 @@ public class ShapesFragment extends BaseFragment {
         final ShapesAdapter shapeAdapter = new ShapesAdapter(getActivity(), shapes, new ShapesAdapter.Callback() {
             @Override
             public void onItemClicked(int position, GetShapesResponse.Shape shape) {
-                Toast.makeText(getActivity(), shape.getImageUrl(), Toast.LENGTH_SHORT).show();
+                DaVinciActivity.start(getActivity(), shape);
             }
         });
         rvShapes.setLayoutManager(new GridLayoutManager(getActivity(), 2));
