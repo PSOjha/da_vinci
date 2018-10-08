@@ -75,7 +75,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
         // Building shape list
         final List<GetShapesResponse.Shape> shapes = new ArrayList<>();
         shapes.add(defaultShape);
-        // shapes.add(defaultShape2);
+        shapes.add(defaultShape2);
 
 
         showLoading("Loading shape...");
@@ -109,6 +109,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 // TODO: Rotate selected ImageView here
+
             }
 
             @Override

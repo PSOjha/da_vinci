@@ -49,13 +49,14 @@ public class DaVinciLayout extends RelativeLayout {
 
     private void init() {
 
+        // Getting accent color to draw border
         this.accentColor = ContextCompat.getColor(getContext(), R.color.colorAccent);
 
+        // Getting width to calculate radius
         final DisplayMetrics dp = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dp);
 
         this.screenWidth = dp.widthPixels;
-        this.screenHeight = dp.heightPixels;
         this.radiusPx = this.screenWidth / 2;
 
         final GradientDrawable shapeDrawable = new GradientDrawable();
