@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -22,6 +25,7 @@ public class DaVinciCanvas extends View {
     private float circlePadding;
     private float borderWidth;
     private float rotateDegree;
+    private ColorFilter bitmapColorFilter = null;
 
     public DaVinciCanvas(Context context) {
         super(context);
@@ -122,12 +126,17 @@ public class DaVinciCanvas extends View {
         canvas.drawCircle(circleX, circleY, circleRadius, orangeCirclePaint);
 
         if (bitmap != null) {
+
+            if (bitmapColorFilter != null) {
+                bitmapPaint.setColorFilter(bitmapColorFilter);
+            }
+
             final int bitmapHeight = bitmap.getHeight();
             final int bitmapWidth = bitmap.getWidth();
             final int bmpX = (cWidth / 2) - (bitmapWidth / 2);
             final int bmpY = (cHeight / 2) - (bitmapHeight / 2);
             canvas.save();
-            canvas.rotate(rotateDegree, cWidth / 2, cHeight / 2);
+            canvas.rotate(rotateDegree, circleX, circleY);
             canvas.drawBitmap(bitmap, bmpX, bmpY, bitmapPaint);
             canvas.restore();
         }
@@ -135,6 +144,16 @@ public class DaVinciCanvas extends View {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+        this.invalidate();
+    }
+
+    public void setBitmapRotation(int progress) {
+        this.rotateDegree = progress;
+        this.invalidate();
+    }
+
+    public void setBitmapColorFilter(int color) {
+        this.bitmapColorFilter = new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         this.invalidate();
     }
 }
