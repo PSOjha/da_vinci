@@ -57,6 +57,15 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
         actions.add(new Action("{ion-ios-search}", R.string.Zoom));
         actions.add(new Action("{ion-ios-color-filter-outline}", R.string.Color));
 
+        actions.add(new Action("{ion-ios-loop}", R.string.Rotate));
+        actions.add(new Action("{ion-ios-search}", R.string.Zoom));
+        actions.add(new Action("{ion-ios-color-filter-outline}", R.string.Color));
+
+
+        actions.add(new Action("{ion-ios-loop}", R.string.Rotate));
+        actions.add(new Action("{ion-ios-search}", R.string.Zoom));
+        actions.add(new Action("{ion-ios-color-filter-outline}", R.string.Color));
+
         final ActionsAdapter actionsAdapter = new ActionsAdapter(this, actions);
         rvActions.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvActions.setAdapter(actionsAdapter);
