@@ -26,7 +26,7 @@ import com.theah64.da_vinci.api.responses.GetShapesResponse;
 import com.theah64.da_vinci.pojos.Action;
 import com.theah64.da_vinci.ui.activities.base.BaseProgressManActivity;
 import com.theah64.da_vinci.ui.adapters.ActionsAdapter;
-import com.theah64.da_vinci.widgets.DaVinciCanvas;
+import com.theah64.da_vinci.widgets.DaVinciLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +37,9 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class DaVinciActivity extends BaseProgressManActivity implements RequestListener<Bitmap>, ActionsAdapter.Callback {
 
     private static final String TAG = DaVinciActivity.class.getSimpleName();
-    @BindView(R.id.dvc)
-    DaVinciCanvas dvc;
+
+    @BindView(R.id.dvl)
+    DaVinciLayout dvl;
 
     @BindView(R.id.rvActions)
     RecyclerView rvActions;
@@ -56,12 +57,8 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
     private YoYo.AnimatorCallback onRotateExitEnd = new YoYo.AnimatorCallback() {
         @Override
         public void call(Animator animator) {
-
             // Hide llRotate
             llRotateControl.setVisibility(View.GONE);
-
-            // Show color picker
-
         }
     };
 
@@ -71,15 +68,25 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
         setContentView(R.layout.activity_da_vinci);
 
         final GetShapesResponse.Shape defaultShape = new GetShapesResponse.Shape("1", "http://theapache64.com:8090/mock_api_data/1538879652615_zjodI3eZ3u.png");
+        final GetShapesResponse.Shape defaultShape2 = new GetShapesResponse.Shape("1", "http://theapache64.com:8090/mock_api_data/1538879648096_PmHwp3duAX.png");
+
         final GetShapesResponse.Shape shape = (GetShapesResponse.Shape) getSerializableExtra(KEY_SHAPE, defaultShape);
+
+        // Building shape list
+        final List<GetShapesResponse.Shape> shapes = new ArrayList<>();
+        shapes.add(defaultShape);
+        // shapes.add(defaultShape2);
+
 
         showLoading("Loading shape...");
 
-        Glide.with(this)
-                .asBitmap()
-                .load(shape.getImageUrl())
-                .addListener(this)
-                .submit(300, 300);
+        for (GetShapesResponse.Shape s : shapes) {
+            Glide.with(this)
+                    .asBitmap()
+                    .load(s.getImageUrl())
+                    .addListener(this)
+                    .submit(300, 300);
+        }
 
         // Building actions
         this.actions = new ArrayList<>();
@@ -101,7 +108,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
         sbRotate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                dvc.setBitmapRotation(progress);
+                // TODO: Rotate selected ImageView here
             }
 
             @Override
@@ -114,6 +121,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
 
             }
         });
+
     }
 
 
@@ -135,7 +143,8 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
     public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
         hideLoading();
         showToast("Ready!");
-        dvc.setBitmap(resource);
+        // TODO : Add ImageView here
+        dvl.addBitmap(resource);
         return true;
     }
 
@@ -173,7 +182,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
 
                     @Override
                     public void onOk(AmbilWarnaDialog dialog, int color) {
-                        dvc.setBitmapColorFilter(color);
+                        // TODO: Set color here
                     }
                 }).show();
         }

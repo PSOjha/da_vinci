@@ -7,16 +7,19 @@
     android:weightSum="100"
     tools:context=".ui.activities.da_vinci.DaVinciActivity">
 
-    <com.theah64.da_vinci.widgets.DaVinciCanvas
-        android:id="@+id/dvc"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/grey" />
+    <com.theah64.da_vinci.widgets.DaVinciLayout
+        android:id="@+id/dvl"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="8dp"
+        android:clipChildren="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:gravity="bottom"
         android:orientation="vertical">
 
         <!--Rotate control-->
