@@ -109,7 +109,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 // TODO: Rotate selected ImageView here
-
+                dvl.setRotation(90);
             }
 
             @Override
