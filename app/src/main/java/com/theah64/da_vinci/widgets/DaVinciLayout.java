@@ -101,4 +101,5 @@ public class DaVinciLayout extends RelativeLayout {
     public void setActiveShapeColor(int color) {
         lastView.setColorFilter(color);
     }
+
 }

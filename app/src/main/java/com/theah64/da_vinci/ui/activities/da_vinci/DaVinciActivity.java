@@ -3,14 +3,24 @@ package com.theah64.da_vinci.ui.activities.da_vinci;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -24,6 +34,8 @@ import com.theah64.da_vinci.ui.activities.base.BaseProgressManActivity;
 import com.theah64.da_vinci.ui.adapters.ActionsAdapter;
 import com.theah64.da_vinci.widgets.DaVinciLayout;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +85,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
                     .asBitmap()
                     .load(s.getImageUrl())
                     .addListener(this)
-                    .submit(500, 500);
+                    .submit(300, 300);
         }
 
         // Building actions
@@ -113,6 +125,75 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.miSave:
+                saveImage(false);
+                break;
+
+            case R.id.miPreview:
+                saveImage(true);
+                break;
+        }
+        return true;
+    }
+
+    private void saveImage(boolean preview) {
+
+        dvl.setDrawingCacheEnabled(true);
+        dvl.buildDrawingCache();
+        Bitmap bmp = dvl.getDrawingCache();
+        bmp = getclip(bmp);
+
+        String filename = System.currentTimeMillis() + "_sample.png";
+        File sd = Environment.getExternalStorageDirectory();
+        File dest = new File(sd, filename);
+
+        try {
+            FileOutputStream out = new FileOutputStream(dest);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+            out.close();
+
+            if (preview) {
+                final Intent i = new Intent();
+                i.setAction(Intent.ACTION_VIEW);
+                i.setDataAndType(Uri.fromFile(dest), "image/png");
+                startActivity(Intent.createChooser(i, "Choose"));
+            }
+
+            Toast.makeText(this, "File saved to " + dest.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            dvl.setDrawingCacheEnabled(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static Bitmap getclip(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
 
     public static void start(Context context, GetShapesResponse.Shape shape) {
         final Intent intent = new Intent(context, DaVinciActivity.class);
@@ -135,6 +216,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
         dvl.addBitmap(resource);
         return true;
     }
+
 
     @Override
     public void onActionPressed(int position) {
@@ -163,7 +245,6 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
 
                     @Override
                     public void onOk(AmbilWarnaDialog dialog, int color) {
-                        // TODO: Set color here
                         dvl.setActiveShapeColor(color);
                     }
                 }).show();

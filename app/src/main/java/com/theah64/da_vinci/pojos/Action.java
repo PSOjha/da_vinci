@@ -5,7 +5,6 @@ import android.support.annotation.StringRes;
 public class Action {
 
     private final String icon;
-
     @StringRes private final int title;
 
     public Action(String icon, int title) {

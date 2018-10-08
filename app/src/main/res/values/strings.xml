@@ -7,4 +7,6 @@
     <string name="Zoom">Zoom</string>
     <string name="Rotate">Rotate</string>
     <string name="Color">Color</string>
+    <string name="SAVE">SAVE</string>
+    <string name="PREVIEW">PREVIEW</string>
 </resources>
