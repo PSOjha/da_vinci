@@ -15,16 +15,14 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.theah64.da_vinci.R;
 
 public class DaVinciLayout extends RelativeLayout {
 
-    private static final int ACCENT_STROKE_WIDTH = 4;
+    private static final int ACCENT_STROKE_WIDTH = 8;
 
     // Clipping workers
     Path clipPath = new Path();
@@ -34,11 +32,8 @@ public class DaVinciLayout extends RelativeLayout {
 
     private static final String TAG = DaVinciLayout.class.getSimpleName();
     private int radiusPx;
-    private int accentColor;
-    private int screenWidth;
-    private int screenHeight;
 
-    private View lastView;
+    private DaVinciImageView lastView;
 
 
     public DaVinciLayout(@NonNull Context context) {
@@ -54,14 +49,14 @@ public class DaVinciLayout extends RelativeLayout {
     private void init() {
 
         // Getting accent color to draw border
-        this.accentColor = ContextCompat.getColor(getContext(), R.color.colorAccent);
+        int accentColor = ContextCompat.getColor(getContext(), R.color.colorAccent);
 
         // Getting width to calculate radius
         final DisplayMetrics dp = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dp);
 
-        this.screenWidth = dp.widthPixels;
-        this.radiusPx = this.screenWidth / 2;
+        int screenWidth = dp.widthPixels;
+        this.radiusPx = screenWidth / 2;
 
         final GradientDrawable shapeDrawable = new GradientDrawable();
         shapeDrawable.setColor(Color.WHITE);
@@ -89,12 +84,21 @@ public class DaVinciLayout extends RelativeLayout {
         );
         iv.setLayoutParams(ivLayoutParams);
         iv.setImageBitmap(resource);
+        iv.setCallback(new DaVinciImageView.Callback() {
+            @Override
+            public void onTouchTest(DaVinciImageView iv) {
+                lastView = iv;
+            }
+        });
 
-        this.lastView = iv;
         addView(iv);
     }
 
     public void setActiveShapeRotation(int angle) {
         lastView.setRotation(angle);
+    }
+
+    public void setActiveShapeColor(int color) {
+        lastView.setColorFilter(color);
     }
 }

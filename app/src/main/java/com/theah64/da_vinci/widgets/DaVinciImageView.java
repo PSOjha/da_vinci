@@ -8,6 +8,7 @@ import android.view.View;
 
 public class DaVinciImageView extends AppCompatImageView implements View.OnTouchListener {
 
+    private Callback callback;
 
     public DaVinciImageView(Context context) {
         super(context);
@@ -23,6 +24,9 @@ public class DaVinciImageView extends AppCompatImageView implements View.OnTouch
         setOnTouchListener(this);
     }
 
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
 
     float dX, dY;
 
@@ -33,6 +37,7 @@ public class DaVinciImageView extends AppCompatImageView implements View.OnTouch
             case MotionEvent.ACTION_DOWN:
                 dX = view.getX() - event.getRawX();
                 dY = view.getY() - event.getRawY();
+                callback.onTouchTest((DaVinciImageView) view);
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -48,5 +53,8 @@ public class DaVinciImageView extends AppCompatImageView implements View.OnTouch
         return true;
     }
 
+    public interface Callback {
+        void onTouchTest(DaVinciImageView iv);
+    }
 
 }

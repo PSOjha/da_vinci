@@ -46,10 +46,6 @@ dependencies {
     // Ionicons
     implementation 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
 
-    // Animation
-    implementation 'com.daimajia.easing:library:2.0@aar'
-    implementation 'com.daimajia.androidanimations:library:2.3@aar'
-
     // Color Picker
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
 

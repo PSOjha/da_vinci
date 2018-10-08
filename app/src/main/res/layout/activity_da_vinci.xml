@@ -9,8 +9,8 @@
 
     <com.theah64.da_vinci.widgets.DaVinciLayout
         android:id="@+id/dvl"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         android:layout_centerInParent="true"
         android:layout_margin="8dp"
         android:clipChildren="true" />
