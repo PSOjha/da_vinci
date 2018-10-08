@@ -52,4 +52,7 @@ dependencies {
 
     // Color Picker
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
+
+    implementation 'com.alexvasilkov:gesture-views:2.5.2'
+
 }

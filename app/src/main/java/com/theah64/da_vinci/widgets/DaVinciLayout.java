@@ -15,6 +15,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -35,6 +37,8 @@ public class DaVinciLayout extends RelativeLayout {
     private int accentColor;
     private int screenWidth;
     private int screenHeight;
+
+    private View lastView;
 
 
     public DaVinciLayout(@NonNull Context context) {
@@ -80,11 +84,17 @@ public class DaVinciLayout extends RelativeLayout {
 
     public void addBitmap(Bitmap resource) {
         final DaVinciImageView iv = new DaVinciImageView(getContext());
-        final LinearLayout.LayoutParams ivLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT
+        final ViewGroup.LayoutParams ivLayoutParams = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         );
         iv.setLayoutParams(ivLayoutParams);
         iv.setImageBitmap(resource);
+
+        this.lastView = iv;
         addView(iv);
+    }
+
+    public void setActiveShapeRotation(int angle) {
+        lastView.setRotation(angle);
     }
 }

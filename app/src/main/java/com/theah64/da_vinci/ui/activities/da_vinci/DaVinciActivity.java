@@ -85,7 +85,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
                     .asBitmap()
                     .load(s.getImageUrl())
                     .addListener(this)
-                    .submit(300, 300);
+                    .submit(500, 500);
         }
 
         // Building actions
@@ -109,7 +109,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 // TODO: Rotate selected ImageView here
-                dvl.setRotation(90);
+                dvl.setActiveShapeRotation(progress);
             }
 
             @Override

@@ -6,12 +6,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.theah64.da_vinci.utils.RotationGestureDetector;
+public class DaVinciImageView extends AppCompatImageView implements View.OnTouchListener {
 
-public class DaVinciImageView extends AppCompatImageView implements View.OnTouchListener, RotationGestureDetector.OnRotationGestureListener {
-
-    private static final String TAG = DaVinciImageView.class.getSimpleName();
-    private RotationGestureDetector mRotationDetector;
 
     public DaVinciImageView(Context context) {
         super(context);
@@ -25,8 +21,8 @@ public class DaVinciImageView extends AppCompatImageView implements View.OnTouch
 
     private void init() {
         setOnTouchListener(this);
-        mRotationDetector = new RotationGestureDetector(this, this);
     }
+
 
     float dX, dY;
 
@@ -46,13 +42,11 @@ public class DaVinciImageView extends AppCompatImageView implements View.OnTouch
                         .setDuration(0)
                         .start();
                 break;
+            default:
+                return false;
         }
-        mRotationDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
+        return true;
     }
 
-    @Override
-    public void onRotation(RotationGestureDetector rotationDetector) {
-        setRotation(rotationDetector.getAngle());
-    }
+
 }
