@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -25,7 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class DaVinciActivity extends BaseProgressManActivity implements RequestListener<Bitmap> {
+public class DaVinciActivity extends BaseProgressManActivity implements RequestListener<Bitmap>, ActionsAdapter.Callback {
 
     @BindView(R.id.dvc)
     DaVinciCanvas dvc;
@@ -34,6 +35,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
     RecyclerView rvActions;
 
     private static final String KEY_SHAPE = "shape";
+    private ActionsAdapter actionsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
         actions.add(new Action("{ion-ios-search}", R.string.Zoom));
         actions.add(new Action("{ion-ios-color-filter-outline}", R.string.Color));
 
-        final ActionsAdapter actionsAdapter = new ActionsAdapter(this, actions);
+        this.actionsAdapter = new ActionsAdapter(this, actions, this);
         rvActions.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvActions.setAdapter(actionsAdapter);
     }
@@ -92,5 +94,12 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
         showToast("Ready!");
         dvc.setBitmap(resource);
         return true;
+    }
+
+    @Override
+    public void onActionPressed(int position) {
+        Toast.makeText(this, String.format("Action %d pressed", position), Toast.LENGTH_SHORT).show();
+        actionsAdapter.setActiveActionPosition(position);
+        actionsAdapter.notifyDataSetChanged();
     }
 }
