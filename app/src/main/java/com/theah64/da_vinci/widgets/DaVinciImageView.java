@@ -1,14 +1,20 @@
 package com.theah64.da_vinci.widgets;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
+import android.view.ScaleGestureDetector;
 
-public class DaVinciImageView extends AppCompatImageView implements View.OnTouchListener {
+
+public class DaVinciImageView extends AppCompatImageView {
 
     private Callback callback;
+
+    private ScaleGestureDetector mScaleDetector;
+    private float mScaleFactor = 1.f;
 
     public DaVinciImageView(Context context) {
         super(context);
@@ -21,7 +27,7 @@ public class DaVinciImageView extends AppCompatImageView implements View.OnTouch
     }
 
     private void init() {
-        setOnTouchListener(this);
+        mScaleDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
     }
 
     public void setCallback(Callback callback) {
@@ -31,30 +37,59 @@ public class DaVinciImageView extends AppCompatImageView implements View.OnTouch
     float dX, dY;
 
     @Override
-    public boolean onTouch(View view, MotionEvent event) {
-        switch (event.getAction()) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        Log.d("Shifar", "Scale factor is " + mScaleFactor);
+        int width = (int) (300 * mScaleFactor);
+        int height = (int) (300 * mScaleFactor);
+        setMeasuredDimension(width, height);
+    }
 
-            case MotionEvent.ACTION_DOWN:
-                dX = view.getX() - event.getRawX();
-                dY = view.getY() - event.getRawY();
-                callback.onTouchTest((DaVinciImageView) view);
-                break;
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getPointerCount() > 1) {
+            mScaleDetector.onTouchEvent(event);
+            return true;
+        } else {
+            switch (event.getAction()) {
 
-            case MotionEvent.ACTION_MOVE:
-                view.animate()
-                        .x(event.getRawX() + dX)
-                        .y(event.getRawY() + dY)
-                        .setDuration(0)
-                        .start();
-                break;
-            default:
-                return false;
+                case MotionEvent.ACTION_DOWN:
+                    dX = getX() - event.getRawX();
+                    dY = getY() - event.getRawY();
+                    callback.onTouchTest(this);
+                    break;
+
+                case MotionEvent.ACTION_MOVE:
+                    animate()
+                            .x(event.getRawX() + dX)
+                            .y(event.getRawY() + dY)
+                            .setDuration(0)
+                            .start();
+                    break;
+                default:
+                    return super.onTouchEvent(event);
+            }
         }
+
         return true;
     }
 
     public interface Callback {
         void onTouchTest(DaVinciImageView iv);
+    }
+
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            mScaleFactor *= detector.getScaleFactor();
+
+            // Don't let the object get too small or too large.
+            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
+
+            requestLayout();
+            return true;
+        }
     }
 
 }

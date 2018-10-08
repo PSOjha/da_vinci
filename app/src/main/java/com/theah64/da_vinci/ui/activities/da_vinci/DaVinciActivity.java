@@ -67,7 +67,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_da_vinci);
 
-        final GetShapesResponse.Shape defaultShape = new GetShapesResponse.Shape("1", "http://theapache64.com:8090/mock_api_data/1538879652615_zjodI3eZ3u.png");
+        final GetShapesResponse.Shape defaultShape = new GetShapesResponse.Shape("1", "http://theapache64.com:8090/mock_api_data/1539000880926_g0m6CyHyor.png");
         final GetShapesResponse.Shape defaultShape2 = new GetShapesResponse.Shape("1", "http://theapache64.com:8090/mock_api_data/1538879648096_PmHwp3duAX.png");
 
         final GetShapesResponse.Shape shape = (GetShapesResponse.Shape) getSerializableExtra(KEY_SHAPE, defaultShape);
@@ -219,7 +219,7 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
 
 
     @Override
-    public void onActionPressed(int position) {
+    public void onActionPressed(final int position) {
 
         actionsAdapter.setActiveActionPosition(position);
         actionsAdapter.notifyDataSetChanged();
@@ -240,15 +240,19 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
                 new AmbilWarnaDialog(this, Color.RED, new AmbilWarnaDialog.OnAmbilWarnaListener() {
                     @Override
                     public void onCancel(AmbilWarnaDialog dialog) {
-
+                        actionsAdapter.setActiveActionPosition(-1);
+                        actionsAdapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onOk(AmbilWarnaDialog dialog, int color) {
+                        actionsAdapter.setActiveActionPosition(-1);
+                        actionsAdapter.notifyDataSetChanged();
                         dvl.setActiveShapeColor(color);
                     }
                 }).show();
         }
 
     }
+
 }

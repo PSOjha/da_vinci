@@ -23,7 +23,8 @@
         <activity
             android:name=".ui.activities.da_vinci.DaVinciActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".ui.activities.categories.CategoriesActivity">
+            android:parentActivityName=".ui.activities.categories.CategoriesActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

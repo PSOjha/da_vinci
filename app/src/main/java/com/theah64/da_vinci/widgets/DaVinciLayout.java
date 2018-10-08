@@ -14,13 +14,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 
 import com.theah64.da_vinci.R;
 
-public class DaVinciLayout extends RelativeLayout {
+public class DaVinciLayout extends FrameLayout {
 
     private static final int ACCENT_STROKE_WIDTH = 8;
 
@@ -63,7 +62,6 @@ public class DaVinciLayout extends RelativeLayout {
         shapeDrawable.setStroke(ACCENT_STROKE_WIDTH, accentColor);
         shapeDrawable.setCornerRadius(screenWidth / 2);
 
-        setGravity(Gravity.CENTER);
         setBackground(shapeDrawable);
     }
 
