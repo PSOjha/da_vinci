@@ -20,7 +20,7 @@ public class ActionsAdapter extends BaseRecyclerViewAdapter<ActionsAdapter.Actio
 
     private final List<Action> actions;
 
-    protected ActionsAdapter(Context context, List<Action> actions) {
+    public ActionsAdapter(Context context, List<Action> actions) {
         super(context);
         this.actions = actions;
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -14,8 +15,13 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.theah64.da_vinci.R;
 import com.theah64.da_vinci.api.responses.GetShapesResponse;
+import com.theah64.da_vinci.pojos.Action;
 import com.theah64.da_vinci.ui.activities.base.BaseProgressManActivity;
+import com.theah64.da_vinci.ui.adapters.ActionsAdapter;
 import com.theah64.da_vinci.widgets.DaVinciCanvas;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -46,8 +52,14 @@ public class DaVinciActivity extends BaseProgressManActivity implements RequestL
                 .submit(300, 300);
 
         // Building actions
+        final List<Action> actions = new ArrayList<>();
+        actions.add(new Action("{ion-ios-loop}", R.string.Rotate));
+        actions.add(new Action("{ion-ios-search}", R.string.Zoom));
+        actions.add(new Action("{ion-ios-color-filter-outline}", R.string.Color));
 
-
+        final ActionsAdapter actionsAdapter = new ActionsAdapter(this, actions);
+        rvActions.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvActions.setAdapter(actionsAdapter);
     }
 
 

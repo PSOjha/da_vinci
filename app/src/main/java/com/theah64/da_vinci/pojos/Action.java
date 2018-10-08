@@ -1,11 +1,14 @@
 package com.theah64.da_vinci.pojos;
 
+import android.support.annotation.StringRes;
+
 public class Action {
 
     private final String icon;
-    private final String title;
 
-    public Action(String icon, String title) {
+    @StringRes private final int title;
+
+    public Action(String icon, int title) {
         this.icon = icon;
         this.title = title;
     }
@@ -14,7 +17,7 @@ public class Action {
         return icon;
     }
 
-    public String getTitle() {
+    public int getTitle() {
         return title;
     }
 }
